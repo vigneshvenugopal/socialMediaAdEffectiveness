@@ -63,7 +63,7 @@ else:
         with open("output\\" + query + '_tweets.csv', 'wb') as out_file:
             writer = csv.writer(out_file)
             writer.writerows(lines)
-    #os.remove("tweets.txt")
+    os.remove("tweets.txt")
 
 if videoid == 0:
     print ("NO Youtube")
@@ -85,7 +85,7 @@ else:
             text_file.write(res + '\n')
 
     text_file.close()
-    #os.remove(outyou)
+    os.remove(outyou)
 
     with open(out, 'r') as in_file:
         stripped = (line.strip() for line in in_file)
@@ -94,5 +94,5 @@ else:
             writer = csv.writer(out_file)
             writer.writerows(lines)
 
-    #os.remove(out)
+    os.remove(out)
 print ("Process Completed")
