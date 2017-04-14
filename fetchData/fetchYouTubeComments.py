@@ -1,17 +1,41 @@
-import os
 import sys
 import time
 import json
 import requests
 import argparse
 import lxml.html
-
+from urllib2 import Request, urlopen, URLError
 from lxml.cssselect import CSSSelector
+import pandas as pd
+import csv
 
 YOUTUBE_COMMENTS_URL = 'https://www.youtube.com/all_comments?v={youtube_id}'
 YOUTUBE_COMMENTS_AJAX_URL = 'https://www.youtube.com/comment_ajax'
-
+YOUTUBE_VIDEO_STATS_URL = 'https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics&id={youtube_video_id}&key={youtube_api_key}'
+YOUTUBE_API_KEY = 'AIzaSyA5lmEsMapTfMu0l2TDS_o6n3WzTYnqUDE'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+df = pd.read_csv('params.csv', index_col=False)
+query = df.iat[0, 1]
+youtube_api_key = df.iat[13, 1]
+
+
+def fetch_video_stats(video_id, api_key):
+    request = Request(YOUTUBE_VIDEO_STATS_URL.format(youtube_video_id=video_id, youtube_api_key=api_key))
+
+    try:
+        response = urlopen(request)
+        video_data = json.loads(response.read())
+        video_stats = video_data['items'][0]['statistics']
+        with open('output\%s_YouTube_Video_Stats.csv' % query, 'wb') as csvFile:
+            w = csv.writer(csvFile)
+            w.writerow(["video_id", "comment_count", "view_count",
+                        "favorite_count", "dislike_count", "like_count"])
+            w.writerow([video_id, video_stats['commentCount'], video_stats['viewCount'],
+                       video_stats['favoriteCount'], video_stats['dislikeCount'], video_stats['likeCount']])
+            csvFile.close()
+
+    except URLError, e:
+        print 'Error in getting YouTube videos stats', e
 
 
 def find_value(html, key, num_chars=2):
@@ -147,6 +171,9 @@ def main(argv):
         if not youtube_id or not output:
             parser.print_usage()
             raise ValueError('you need to specify a Youtube ID and an output filename')
+
+        print('Downloading Video Stats for video:', youtube_id)
+        fetch_video_stats(youtube_id, youtube_api_key)
 
         print ('Downloading Youtube comments for video:', youtube_id)
         count = 0

@@ -60,7 +60,7 @@ else:
     with open(out, 'r') as in_file:
         stripped = (line.strip() for line in in_file)
         lines = (line.split("|$") for line in stripped if line)
-        with open("output\\" + query + '_tweets.csv', 'wb') as out_file:
+        with open("output\\" + query + '_Twitter_Tweets.csv', 'wb') as out_file:
             writer = csv.writer(out_file)
             writer.writerows(lines)
     os.remove("tweets.txt")
@@ -90,7 +90,7 @@ else:
     with open(out, 'r') as in_file:
         stripped = (line.strip() for line in in_file)
         lines = (line.split("|$") for line in stripped if line)
-        with open('output\\' + query + '_youtube.csv', 'wb') as out_file:
+        with open('output\\' + query + '_YouTube_Video_Comments.csv', 'wb') as out_file:
             writer = csv.writer(out_file)
             writer.writerows(lines)
 

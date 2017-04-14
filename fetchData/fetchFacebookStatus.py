@@ -154,7 +154,7 @@ def processFacebookPageFeedStatus(status, access_token):
 
 
 def scrapeFacebookPageFeedStatus(group_id, access_token):
-    with open('output\%s_facebook_statuses.csv' % query, 'wb') as file:
+    with open('output\%s_Facebook_Status.csv' % query, 'wb') as file:
         w = csv.writer(file)
         w.writerow(["status_id", "status_message", "status_author",
                     "link_name", "status_type", "status_link", "permalink_url",
