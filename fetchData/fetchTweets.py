@@ -17,7 +17,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv, "",
-                                   ("username=", "since=", "until=", "querysearch=", "toptweets", "maxtweets="))
+                                   ("username=", "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "filename="))
 
         tweetcriteria = got.manager.TweetCriteria()
 
@@ -40,7 +40,10 @@ def main(argv):
             elif opt == '--maxtweets':
                 tweetcriteria.maxTweets = int(arg)
 
-        outputFile = codecs.open("tweets.txt", "w+", "utf-8")
+            elif opt == '--filename':
+                filename = arg
+
+        outputFile = codecs.open(filename, "w+", "utf-8")
 
         outputFile.write('username|$date|$retweets|$favorites|$text|$geo|$mentions|$hashtags|$id|$permalink')
 
@@ -60,7 +63,7 @@ def main(argv):
         print ('Arguments parser error, try -h' + arg)
     finally:
         outputFile.close()
-        print ('Done. Output file generated "tweets.txt".')
+        print ('Done. Output file generated ' + filename)
 
 
 if __name__ == '__main__':
