@@ -5,14 +5,10 @@ import csv
 import time
 import pandas as pd
 
-app_id = "477873422398335"
-app_secret = "2b9be6bc09b2c6544bb827342ee93e8d"  # DO NOT SHARE WITH ANYONE!
-
-
 df = pd.read_csv('params.csv', index_col=False)
 query = df.iat[0, 1]
 file_id = df.iat[1, 1]
-access_token = app_id + "|" + app_secret
+access_token = df.iat[12, 1]
 
 # access_token = raw_input("Please Paste Your Access Token:")
 

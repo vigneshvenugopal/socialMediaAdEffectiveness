@@ -35,10 +35,11 @@ df = df.fillna(0)
 query = df.iat[0, 1]
 fb = df.iat[1, 1]
 twitterquery = df.iat[6, 1]
-fromdate = df.iat[7, 1]
-tilldate = df.iat[8, 1]
-num = df.iat[9, 1]
-videoid = df.iat[10, 1]
+twitterhandle = df.iat[7, 1]
+fromdate = df.iat[8, 1]
+tilldate = df.iat[9, 1]
+num = df.iat[10, 1]
+videoid = df.iat[11, 1]
 
 if query == 0:
     print("Please enter the Ad details")

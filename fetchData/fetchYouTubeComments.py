@@ -16,7 +16,7 @@ YOUTUBE_API_KEY = 'AIzaSyA5lmEsMapTfMu0l2TDS_o6n3WzTYnqUDE'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
 df = pd.read_csv('params.csv', index_col=False)
 query = df.iat[0, 1]
-youtube_api_key = df.iat[12, 1]
+youtube_api_key = df.iat[13, 1]
 
 
 def fetch_video_stats(video_id, api_key):
