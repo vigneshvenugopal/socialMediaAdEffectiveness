@@ -37,6 +37,7 @@ fb = df.iat[1, 1]
 twitterquery = df.iat[6, 1]
 twitterhandle = df.iat[7, 1]
 fromdate = df.iat[8, 1]
+nextdate = df.iat[8, 2]
 tilldate = df.iat[9, 1]
 num = df.iat[10, 1]
 videoid = df.iat[11, 1]
@@ -55,19 +56,33 @@ else:
     if twitterquery == 0:
         print ("No Twitter")
     else:
-        out = (query + "_tweets" + ".txt")
+        out_tweet = (query + "_tweets.txt")
+        out_stats = (query + "_stats.txt")
+
         com2 = (
             'python' + ' ' + 'fetchTweets.py' + ' ' + '--querysearch' + ' ' + twitterquery + ' ' + '--since' + ' ' + fromdate
-            + ' ' + '--until' + ' ' + tilldate + ' ' + '--maxtweets' + ' ' + num + ' ' + '--filename' + ' ' + out)
+            + ' ' + '--until' + ' ' + tilldate + ' ' + '--maxtweets' + ' ' + num + ' ' + '--filename' + ' ' + out_tweet)
         print (com2)
         subprocess.Popen(com2).wait()
-        with open(out, 'r') as in_file:
+        with open(out_tweet, 'r') as in_file:
             stripped = (line.strip() for line in in_file)
             lines = (line.split("|$") for line in stripped if line)
             with open("output\\" + query + '_Twitter_Tweets.csv', 'wb') as out_file:
                 writer = csv.writer(out_file)
                 writer.writerows(lines)
-        os.remove(query+"_tweets.txt")
+        os.remove(out_tweet)
+
+        com3 = (
+            'python' + ' ' + 'fetchTweets.py' + ' ' + '--username' + ' ' + twitterhandle + ' ' + '--querysearch' + ' ' + twitterquery + ' ' + '--since' + ' ' + fromdate
+            + ' ' + '--until' + ' ' + nextdate + ' ' + '--maxtweets' + ' ' + num + ' ' + '--filename' + ' ' + out_stats)
+        subprocess.Popen(com3).wait()
+        with open(out_stats, 'r') as in_file:
+            stripped = (line.strip() for line in in_file)
+            lines = (line.split("|$") for line in stripped if line)
+            with open("output\\" + query + '_Twitter_Tweet_Stats.csv', 'wb') as out_file:
+                writer = csv.writer(out_file)
+                writer.writerows(lines)
+        os.remove(out_stats)
 
     if videoid == 0:
         print ("NO Youtube")
