@@ -46,3 +46,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+fetchData/got/manager/TweetCriteria.pyc
+.idea/workspace.xml
+fetchData/got/manager/TweetManager.pyc
+fetchData/got/models/Tweet.pyc
+fetchData/got/__init__.pyc
+processData/.Rhistory
+fetchData/got/models/__init__.pyc
+fetchData/got/manager/__init__.pyc
