@@ -85,7 +85,7 @@ else:
         os.remove(out_stats)
 
     if videoid == 0:
-        print ("NO Youtube")
+        print ("No Youtube")
     else:
         print outyou
         com3 = ('python' + ' ' + 'fetchYouTubeComments.py' + ' ' + '-y' + ' ' + videoid + ' ' + '-o' + ' ' + outyou)
