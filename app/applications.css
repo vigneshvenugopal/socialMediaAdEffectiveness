@@ -1,0 +1,63 @@
+body,html{
+ margin:0;
+ padding:0;
+ background-color:#333;
+ height:100%;
+}
+
+.pull-left{
+  float:left!important;
+}
+
+.pull-right{
+  float:right!important;
+}
+
+.display-block{
+    display:block!important;
+}
+
+.display-inline-block{
+    display:inline-block!important;
+}
+
+.container.app{
+    margin:0 auto;
+    height:402px;
+    width:935px;
+    position:relative;
+    top:50%;
+    margin-top:-210px;
+    background-color:#fff;
+}
+
+.section{
+   margin:5px;
+
+}
+.form-row label, .form-row .form-field{
+    display:inline-block;
+    margin: 5px 0;
+}
+
+.form-row label{
+    width: 30%;
+    text-align:right;
+}
+
+.form-row .form-field{
+    width:66%;
+}
+.hidden{
+    display:none;
+}
+.form-row select{
+    height: 29px;
+    width: 67.54%!important;
+}
+.top-section {
+    padding: 10px 5px;
+}
+.top-section .left{
+    width: 325px;
+}
