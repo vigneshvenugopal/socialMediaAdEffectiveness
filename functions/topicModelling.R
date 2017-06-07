@@ -42,7 +42,7 @@ topicModelling <- function(posTaggedData, wordList){
   k = 5
   flush.console();
   lda.model = LDA(dtm, k,method='GIBBS')
-  setwd("C:\\Users\\Anisha Jagadesan\\Desktop\\")
+  
   write.csv(terms(lda.model,7), file = "terms_Gibbs.csv");
   
   lda.model = LDA(dtm, k,method='VEM')

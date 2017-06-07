@@ -1,25 +1,35 @@
 # required pakacges
-library(twitteR)
-library(plyr)
+
+library(tm)
+library(qdap)
+library(openNLP)
 library(ggplot2)
 library(wordcloud)
-library(RColorBrewer)
-library(Rstem)
-library(readr)
-library(tm)
-library("SnowballC")
-library("RCurl")
-library(rvest)
-library(dplyr)
-library("textcat")
-library(stringr)
-library(openNLP)
-library(NLP)
 library(syuzhet)
-library("pander")
-library(qdap)
+library(pander)
+library(topicmodels)
 
-setwd("C:\\Users\\Vicky\\Google Drive\\Capstone\\Data\\New")
+# library(twitteR)
+# library(plyr)
+# library(RColorBrewer)
+# library(Rstem)
+# library(readr)
+# library("SnowballC")
+# library("RCurl")
+# library(rvest)
+# library(dplyr)
+# library("textcat")
+# library(stringr)
+# library(openNLP)
+# library(NLP)
+
+
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/cleanSocialMediaText.R")
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/plotWordMetrics.R")
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/posTagging.R")
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/sentimentAnalysis.R")
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/topicModelling.R")
+
 Twitter_Data <- read.csv("RivaahBridesByTanishq_Twitter_Tweets.csv")
 Twitter<-as.data.frame(Twitter_Data$text)
 Twitter$Source<-1
@@ -33,18 +43,24 @@ YouTube<-as.data.frame(YouTube_Data$text)
 YouTube$Source<-3
 colnames(YouTube)[1]<-"Text"
 Finaldata<-rbind(Twitter,FB,YouTube)
+
 myStopWords<- c(stopwords("SMART"),"http","https","bitly","sticke","www","pictwittercom","bhi","pictwitter","com","shavetjain","youtube","pakistan","zeevekadlm","ghaywan","singh","sharma","such","sticker")
 wordFrequency = 10
 correlationValue = 0.1
-associationWord = "rivaahbridesbytanishq"
+associationWord = "emotional"
 associationValue = 0.13
+wordCloudMaxWords = 100
 
 myCorpus <- cleanSocialMediaText(Finaldata$Text, myStopWords)
-posTagData = 0
-list[posTagData, myWordList] <- posTagging(myCorpus)
 
-plotWordMetrics(myCorpus, myWordList, wordFrequency, correlationValue, associationWord, associationValue)
+returnList <- posTagging(myCorpus)
+posTaggedData <- returnList[[1]]
+myWordList <- returnList[[2]]
+myCorpusWordList <- returnList[[3]]
+
+plotWordMetrics(myCorpus, myCorpusWordList, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords)
 
 sentimentAnalysis(myWordList)
 
+topicModelling(posTaggedData, myWordList)
 
