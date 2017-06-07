@@ -1,4 +1,5 @@
 cleanSocialMediaText <- function(text, myStopWords){
+  
     text  <- as.character(genX(text, " <", ">"))
     nonASCI<- grep("text", iconv(text, "latin1", "ASCII", sub="text"))
     text<- text[-nonASCI]

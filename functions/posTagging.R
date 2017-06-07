@@ -20,5 +20,5 @@ posTagging <-  function(corpus, PTA, ...) {
     adjectives <- strsplit(posTaggedData$posTagged,' ')[[1]][which(posTaggedData$posTags == 'JJ')]
     wordList <- sapply(strsplit(adjectives, "/"), "[", 1)
     
-    return(list[posTaggedData, wordList])
+    return(list(posTaggedData, wordList))
 }
