@@ -1,8 +1,6 @@
-plotWordMetrics <- function(corpus, wordList, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords){
+plotWordMetrics <- function(corpus, corpusWordList, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords){
     
-    myCorpusWordList <- Corpus(VectorSource(wordList))
-    
-    tdm <- TermDocumentMatrix(myCorpusWordList, control= list(wordLengths= c(1, Inf)))
+    tdm <- TermDocumentMatrix(corpusWordList, control= list(wordLengths= c(1, Inf)))
     freq.terms <- findFreqTerms(tdm, lowfreq = wordFrequency)
     term.freq <- rowSums(as.matrix(tdm))
     term.freq <- subset(term.freq, term.freq > wordFrequency)
@@ -14,7 +12,6 @@ plotWordMetrics <- function(corpus, wordList, wordFrequency, correlationValue, a
     
     findAssocs(tdm, associationWord, associationValue)
     
-    par(mfrow = c(2, 2))
     ggplot(df, aes(reorder(term, freq),freq)) + theme_bw() + geom_bar(stat = "identity")  + coord_flip() +labs(list(title="Term Frequency Chart", x="Terms", y="Term Counts"))
     wordcloud(words = names(word.freq), freq = word.freq, min.freq = 7, random.order = F, colors = brewer.pal(8, "Dark2"), max.words = wordCloudMaxWords)
     plot(wordCorr)

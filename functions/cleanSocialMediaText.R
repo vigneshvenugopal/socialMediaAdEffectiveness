@@ -1,21 +1,21 @@
-cleanSocialMediaText <- function(text, myStopWords){
+cleanSocialMediaText <- function(text, stopWords){
   
     text  <- as.character(genX(text, " <", ">"))
     nonASCI<- grep("text", iconv(text, "latin1", "ASCII", sub="text"))
     text<- text[-nonASCI]
-    myCorpus<- Corpus(VectorSource(text))
+    corpus<- Corpus(VectorSource(text))
     removeURL <- function(x) gsub("http[^[:space:]]*", "", x)  
-    myCorpus <- tm_map(myCorpus, content_transformer(removeURL))
+    corpus <- tm_map(corpus, content_transformer(removeURL))
     removeNumPunct <- function(x) gsub("[^[:alpha:][:space:]]*", "", x)   
-    myCorpus <- tm_map(myCorpus, content_transformer(removeNumPunct))
-    myCorpus<- tm_map(myCorpus,removeWords , myStopWords) 
+    corpus <- tm_map(corpus, content_transformer(removeNumPunct))
+    corpus<- tm_map(corpus,removeWords , stopWords) 
     removeSingle <- function(x) gsub(" . ", " ", x)   
-    myCorpus <- tm_map(myCorpus, content_transformer(removeSingle))
-    myCorpus<- tm_map(myCorpus, stripWhitespace) 
-    myCorpusCopy<- myCorpus
+    corpus <- tm_map(corpus, content_transformer(removeSingle))
+    corpus<- tm_map(corpus, stripWhitespace) 
+    corpusCopy<- corpus
     my_function<-content_transformer(function(x,pattern)gsub(pattern," ",x))
-    myCorpus<-tm_map(myCorpus,my_function,"[[STICKER]]")
-    myCorpus<-tm_map(myCorpus,content_transformer(tolower))
+    corpus<-tm_map(corpus,my_function,"[[STICKER]]")
+    corpus<-tm_map(corpus,content_transformer(tolower))
     
-    return(myCorpus)
+    return(corpus)
 }

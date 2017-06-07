@@ -19,6 +19,7 @@ posTagging <-  function(corpus, PTA, ...) {
     posTaggedData <- list(posTagged = posTagged, posTags = posTags)
     adjectives <- strsplit(posTaggedData$posTagged,' ')[[1]][which(posTaggedData$posTags == 'JJ')]
     wordList <- sapply(strsplit(adjectives, "/"), "[", 1)
+    corpusWordList <- Corpus(VectorSource(wordList))
     
-    return(list(posTaggedData, wordList))
+    return(list(posTaggedData, wordList, corpusWordList))
 }

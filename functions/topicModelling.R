@@ -1,4 +1,4 @@
-topicModelling <- function(posTaggedData, myWordList){
+topicModelling <- function(posTaggedData, wordList){
   
   nn <- strsplit(posTaggedData$posTagged,' ')[[1]][which(posTaggedData$posTags == 'NN')]
   nn <- sapply(strsplit(nn, "/"), "[", 1)
@@ -11,8 +11,7 @@ topicModelling <- function(posTaggedData, myWordList){
   removedWords <- append(removedWords, nns)
   removedWords <- unlist(removedWords)
   
-  corpusData <- Corpus(VectorSource(myWordList))
-  #my_function <- content_transformer(function(x,pattern)gsub(pattern," ",x))
+  corpusData <- Corpus(VectorSource(wordList))
   corpusData <- tm_map(corpusData, removeWords, removedWords)
   tdmLda<- TermDocumentMatrix(corpusData, control= list(wordLengths= c(1, Inf)))
   dtm.control = list(tolower= F,removePunctuation=F,removeNumbers= F,
@@ -29,8 +28,8 @@ topicModelling <- function(posTaggedData, myWordList){
     tweets.df <- tweets.df[-as.numeric(nullDocs$dimnames$Docs),]
   }
   
-  lda <- LDA(dtm, k = 5) # find 5 topic
-  term <- terms(lda, 7) # first 7 terms of every topic
+  lda <- LDA(dtm, k = 5)
+  term <- terms(lda, 7)
   (term <- apply(term, MARGIN = 2, paste, collapse = ", "))
   
   
