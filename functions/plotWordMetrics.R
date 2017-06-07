@@ -12,8 +12,7 @@ plotWordMetrics <- function(corpus, corpusWordList, wordFrequency, correlationVa
     
     findAssocs(tdm, associationWord, associationValue)
     
-    ggplot(df, aes(reorder(term, freq),freq)) + theme_bw() + geom_bar(stat = "identity")  
-    + coord_flip() +labs(list(title="Term Frequency Chart", x="Terms", y="Term Counts"))
+    ggplot(df, aes(reorder(term, freq),freq)) + theme_bw() + geom_bar(stat = "identity") + coord_flip() +labs(list(title="Term Frequency Chart", x="Terms", y="Term Counts"))
     
     wordcloud(words = names(word.freq), freq = word.freq, min.freq = 7, random.order = F, colors = brewer.pal(8, "Dark2"), max.words = wordCloudMaxWords)
     

@@ -1,4 +1,4 @@
-topicModelling <- function(posTaggedData, wordList){
+topicModelling <- function(posTaggedData, corpusWordList){
   
   nn <- strsplit(posTaggedData$posTagged,' ')[[1]][which(posTaggedData$posTags == 'NN')]
   nn <- sapply(strsplit(nn, "/"), "[", 1)
@@ -7,14 +7,13 @@ topicModelling <- function(posTaggedData, wordList){
   nnp <- strsplit(posTaggedData$posTagged,' ')[[1]][which(posTaggedData$posTags == 'NNP')]
   nnp <- sapply(strsplit(nnp, "/"), "[", 1)
   
-  removedWords <- append(nn, nnp)
-  removedWords <- append(removedWords, nns)
-  removedWords <- unlist(removedWords)
+  wordsToRemove <- append(nn, nnp)
+  wordsToRemove <- append(wordsToRemove, nns)
+  wordsToRemove <- unlist(wordsToRemove)
   
-  corpusData <- Corpus(VectorSource(wordList))
-  corpusData <- tm_map(corpusData, removeWords, removedWords)
-  tdmLda<- TermDocumentMatrix(corpusData, control= list(wordLengths= c(1, Inf)))
-  dtm.control = list(tolower= F,removePunctuation=F,removeNumbers= F,
+  try(corpusWordList <- tm_map(corpusWordList, removeWords, wordsToRemove))
+  tdmLda <- TermDocumentMatrix(corpusWordList, control= list(wordLengths= c(1, Inf)))
+  dtm.control <- list(tolower= F,removePunctuation=F,removeNumbers= F,
                      stemming= F, minWordLength = 3,weighting= weightTf,stopwords=F)
   
   dtm <- as.DocumentTermMatrix(tdmLda, control = dtm.control)
