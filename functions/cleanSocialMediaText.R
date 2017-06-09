@@ -12,10 +12,9 @@ cleanSocialMediaText <- function(text, stopWords){
     removeSingle <- function(x) gsub(" . ", " ", x)   
     corpus <- tm_map(corpus, content_transformer(removeSingle))
     corpus<- tm_map(corpus, stripWhitespace) 
-    corpusCopy<- corpus
     my_function<-content_transformer(function(x,pattern)gsub(pattern," ",x))
-    corpus<-tm_map(corpus,my_function,"[[STICKER]]")
-    corpus<-tm_map(corpus,content_transformer(tolower))
+    tmCorpus<-tm_map(corpus,my_function,"[[STICKER]]")
+    tmCorpus<-tm_map(corpus,content_transformer(tolower))
     
-    return(corpus)
+    return(list(tmCorpus, corpus))
 }

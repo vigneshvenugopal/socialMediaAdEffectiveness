@@ -9,7 +9,7 @@ library(syuzhet)
 library(pander)
 library(topicmodels)
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/cleanSocialMediaText.R")
-source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/plotWordMetrics.R")
+source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/plotTextMetrics.R")
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/posTagging.R")
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/sentimentAnalysis.R")
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/topicModelling.R")
@@ -32,19 +32,29 @@ myStopWords<- c(stopwords("SMART"),"http","https","bitly","sticke","www","pictwi
 wordFrequency = 10
 correlationValue = 0.1
 associationWord = "emotional"
-associationValue = 0.13
+associationValue = 0.1
 wordCloudMaxWords = 100
+wordCloudMinFreq = 7
+corrWord = 'beautiful'
 
-myCorpus <- cleanSocialMediaText(finalData$text, myStopWords)
+corpusList <- cleanSocialMediaText(finalData$text, myStopWords)
+myTmCorpus <- corpusList[[1]]
+myCorpus <- corpusList[[2]]
 
-returnList <- posTagging(myCorpus)
-posTaggedData <- returnList[[1]]
-myWordList <- returnList[[2]]
-myCorpusWordList <- returnList[[3]]
+posDataReturnList <- posTagging(myTmCorpus, myCorpus)
+posTaggedData <- posDataReturnList[[1]]
+myWordList <- posDataReturnList[[2]]
+myTmCorpusWordList <- posDataReturnList[[3]]
+myVCorpus <- posDataReturnList[[4]]
 
-plotWordMetrics(myCorpus, myCorpusWordList, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords)
+plotReturnList <- plotTextMetrics(myTmCorpusWordList, myVCorpus, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords, wordCloudMinFreq, corrWord)
+plotReturnList[[1]]
+plotReturnList[[2]]
+plotReturnList[[3]]
+plotReturnList[[4]]
 
-sentimentAnalysis(myWordList)
+sentiPlotList <- sentimentAnalysis(myWordList)
+sentiPlotList[[1]]
+sentiPlotList[[2]]
 
-topicModelling(posTaggedData, myCorpusWordList)
-
+topicModelling(posTaggedData, myTmCorpusWordList)
