@@ -47,4 +47,19 @@ topicModelling <- function(posTaggedData, corpusWordList){
   lda.model = LDA(dtm, k,method='VEM')
   write.csv(terms(lda.model,7), file = "terms_Vem.csv");
   
+  ap_topics <- tidy(lda.model, matrix = "beta")
+  ap_topics
+  
+  ap_top_terms <- ap_topics %>%
+      group_by(topic) %>%
+      top_n(10, beta) %>%
+      ungroup() %>%
+      arrange(topic, -beta)
+  
+  ap_top_terms %>%
+      mutate(term = reorder(term, beta)) %>%
+      ggplot(aes(term, beta, fill = factor(topic))) +
+      geom_col(show.legend = FALSE) +
+      facet_wrap(~ topic, scales = "free") +
+      coord_flip()
 }

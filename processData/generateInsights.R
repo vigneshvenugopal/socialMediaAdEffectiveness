@@ -6,6 +6,9 @@ library(wordcloud)
 library(syuzhet)
 library(pander)
 library(topicmodels)
+library(igraph)
+library(tidytext)
+library(dplyr)
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/cleanSocialMediaText.R")
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/plotTextMetrics.R")
 source("https://raw.githubusercontent.com/vigneshvenugopal/socialMediaAdEffectiveness/master/functions/posTagging.R")
@@ -67,11 +70,9 @@ myVCorpus <- posDataReturnList[[4]]
 plotReturnList <- plotTextMetrics(myTmCorpusWordList, myVCorpus, wordFrequency, correlationValue, associationWord, associationValue, wordCloudMaxWords, wordCloudMinFreq, corrWord)
 plotReturnList[[1]]
 plotReturnList[[2]]
-plotReturnList[[3]]
-plotReturnList[[4]]
 
-#Sentiment Analysis
+# Sentiment Analysis
 sentimentAnalysis(myWordList)
 
-#Topics Modelling
-topicModelling(posTaggedData, myTmCorpusWordList)
+# Topics Modelling
+topicModelReturnList <- topicModelling(posTaggedData, myTmCorpusWordList)
