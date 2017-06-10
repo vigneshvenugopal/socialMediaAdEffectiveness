@@ -75,4 +75,4 @@ plotReturnList[[2]]
 sentimentAnalysis(myWordList)
 
 # Topics Modelling
-topicModelReturnList <- topicModelling(posTaggedData, myTmCorpusWordList)
+topicModelling(posTaggedData, myTmCorpusWordList)
