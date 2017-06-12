@@ -16,6 +16,8 @@ plotTextMetrics <- function(tmCorpusWordList, vCorpus, wordFrequency, correlatio
     colnames(associationDataDF) <- c('word', 'association')
     associationGraph <- graph.data.frame(associationDataDF, directed = TRUE)
     
+    par(mfrow= c(1, 1))
+    
     wordcloud(words = names(word.freq), freq = word.freq, min.freq = wordCloudMinFreq, random.order = F, colors = brewer.pal(8, "Dark2"), max.words = wordCloudMaxWords)
     plot(associationGraph, main = associationWord)
     wordFreqPlot <- ggplot(df, aes(reorder(term, freq),freq)) + theme_bw() + geom_bar(stat = "identity") + coord_flip() +labs(list(title="Term Frequency Chart", x="Terms", y="Term Counts"))

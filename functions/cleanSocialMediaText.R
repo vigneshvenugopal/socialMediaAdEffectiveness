@@ -1,14 +1,17 @@
-cleanSocialMediaText <- function(text, stopWords){
+cleanSocialMediaText <- function(text, stopWords, removeASCII){
   
     text  <- as.character(genX(text, " <", ">"))
-    nonASCI<- grep("text", iconv(text, "latin1", "ASCII", sub="text"))
-    text<- text[-nonASCI]
+    if (removeASCII == "Y"){
+      nonASCI<- grep("text", iconv(text, "latin1", "ASCII", sub="text"))
+      text<- text[-nonASCI]
+    }
     corpus<- Corpus(VectorSource(text))
     removeURL <- function(x) gsub("http[^[:space:]]*", "", x)  
     corpus <- tm_map(corpus, content_transformer(removeURL))
     removeNumPunct <- function(x) gsub("[^[:alpha:][:space:]]*", "", x)   
     corpus <- tm_map(corpus, content_transformer(removeNumPunct))
-    corpus<- tm_map(corpus, removeWords, stopWords) 
+    corpus<- tm_map(corpus, removeWords, stopwords("SMART"))
+    corpus<- tm_map(corpus, removeWords, stopWords)
     removeSingle <- function(x) gsub(" . ", " ", x)   
     corpus <- tm_map(corpus, content_transformer(removeSingle))
     corpus<- tm_map(corpus, stripWhitespace) 

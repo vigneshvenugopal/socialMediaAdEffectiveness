@@ -40,22 +40,23 @@ completeData <- rbind(tweets, fbComments, youTubeComments)
 
 # Setup the below mentioned params for each datasource (i.e., completeData, Facebook, Twitter & YouTube),
 # And execute the data processing code below available below
-inputData <- fbComments$text
-myStopWords <- c(stopwords("SMART"),"http","https","bitly","sticke","www","pictwittercom","bhi","pictwitter","com","shavetjain","youtube","pakistan","zeevekadlm","ghaywan","singh","sharma","such","sticker")
-wordFrequency <- 10
-correlationValue <- 0.1
+inputData <- youTubeComments$text
+myStopWords <- c("http","https","bitly","sticke","www","pictwittercom","bhi","pictwitter","com","shavetjain","youtube","pakistan","zeevekadlm","ghaywan","singh","sharma","such","sticker","pictwittercomsjddmdmqe","pictwittercomnswhhdzif","pictwittercomfkcxgbo")
+wordFrequency <- 3
+correlationValue <- 0.3
 associationWord <- "emotional"
 associationValue <- 0.1
 wordCloudMaxWords <- 100
-wordCloudMinFreq <- 7
+wordCloudMinFreq <- 3
 corrWord <- 'beautiful'
+removeASCII <- 'N' ##"Y" or "N"
 
 #####################################
 # Process data and generate insights
 #####################################
 
 # Cleaning the Data
-corpusList <- cleanSocialMediaText(inputData, myStopWords)
+corpusList <- cleanSocialMediaText(inputData, myStopWords, removeASCII)
 myTmCorpus <- corpusList[[1]]
 myCorpus <- corpusList[[2]]
 
